@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator WaitAndSend()
     {
         yield return new WaitForSeconds(1);
+        InputManager.instance.ActivateInput();
         CanISend = true;
     }
 
