@@ -109,7 +109,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IOnEventCallback
         {
             raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
         }
-        PhotonNetwork.RaiseEvent(SendPos, data, raiseEventOptions, SendOptions.SendReliable);
+        PhotonNetwork.RaiseEvent(SendPos, data, raiseEventOptions, SendOptions.SendUnreliable);
     }
 
     #endregion
