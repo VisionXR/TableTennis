@@ -9,6 +9,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IOnEventCallback
 {
     RoomOptions roomOptions;
     public LoginScript loginScript;
+    public int NextSceneNumber;
     // Start is called before the first frame update
     void Start()
     {
@@ -48,7 +49,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
     public override void OnJoinedRoom()
     {
-        Debug.Log( PhotonNetwork.LocalPlayer.NickName+   "  has  joined the room");
+       
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+        {
+            Debug.Log(PhotonNetwork.LocalPlayer.NickName + "  has  joined the room");
+        }
+        else if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+        {
+            Debug.Log(PhotonNetwork.LocalPlayer.NickName + "  has  joined the room");
+            PhotonNetwork.LoadLevel(NextSceneNumber);
+        }
     }
 
         #endregion
