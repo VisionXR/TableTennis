@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public GameObject cam;
     public GameObject Bat1, Bat2;
     private bool CanISend = false;
+    public GameObject Ball;
 
     private void Awake()
     {
@@ -32,6 +33,9 @@ public class GameManager : MonoBehaviour
             cam.transform.position = P2Pos.position;
             cam.transform.rotation = P2Pos.rotation;
             Bat2.GetComponent<BatScript>().StartMovement();
+            Rigidbody rb= Bat2.GetComponent<Rigidbody>();
+            rb.isKinematic = true;
+            Ball.GetComponent<Rigidbody>().isKinematic = true;
         }
         StartCoroutine(WaitAndSend());
     }
@@ -39,13 +43,17 @@ public class GameManager : MonoBehaviour
     private IEnumerator WaitAndSend()
     {
         yield return new WaitForSeconds(1);
-        InputManager.instance.ActivateInput();
+        InputManager.instance.ActivateInput();  
         CanISend = true;
+        if(isPlayer1)
+        {
+            Ball.GetComponent<BallScript>().Startball();
+        }
     }
 
     public void ReceivedBatPos(Vector3 Pos)
     {
-        Debug.Log(" Received Bat Pos ");
+       
         if(isPlayer1)
         {
             Bat2.transform.position = Pos;
@@ -53,6 +61,14 @@ public class GameManager : MonoBehaviour
         else
         {
             Bat1.transform.position = Pos;
+        }
+    }
+
+    public void ReceiveBallPos(Vector3 Pos)
+    {
+        if(isPlayer2)
+        {
+            Ball.transform.position = Pos;
         }
     }
     void Update()

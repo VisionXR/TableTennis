@@ -26,6 +26,6 @@ public class BatScript : MonoBehaviour
     {
         y = TL - (0.001f * MousePos.y * (TL - BL));
         z = LL + (0.001f * 0.5f * MousePos.x * (RL - LL));
-        return new Vector3(x, y, z);
+        return new Vector3(x, -y, z);
     }
 }

@@ -19,6 +19,9 @@ TagManager:
   - BackgroundLayer
   - SecondaryLayer
   - ErrorLayer
+  - Bat
+  - Table
+  - Ground
   layers:
   - Default
   - TransparentFX

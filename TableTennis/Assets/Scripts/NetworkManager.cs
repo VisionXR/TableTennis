@@ -13,7 +13,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IOnEventCallback
     RoomOptions roomOptions;
     public LoginScript loginScript;
     public int NextSceneNumber;
-    private const byte LoadLevel = 1,SendPos = 2;
+    private const byte LoadLevel = 1, SendPos = 2, SendBallPos = 3;
     // Start is called before the first frame update
 
     void Awake()
@@ -58,6 +58,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IOnEventCallback
             object[] data = (object[])photonEvent.CustomData;
             GameManager.instance.ReceivedBatPos((Vector3)data[0]);
         }
+        else if (eventCode == SendBallPos)
+        {
+            object[] data = (object[])photonEvent.CustomData;
+            GameManager.instance.ReceiveBallPos((Vector3)data[0]);
+        }
 
     }
     #endregion
@@ -99,7 +104,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IOnEventCallback
     }
     public void SendBatPos(Vector3 Pos)
     {
-        Debug.Log(" Send Bat Pos ");
+     
         object[] data = new object[] { Pos};
         RaiseEventOptions raiseEventOptions;
         if (PhotonNetwork.IsMasterClient)
@@ -111,6 +116,22 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IOnEventCallback
             raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
         }
         PhotonNetwork.RaiseEvent(SendPos, data, raiseEventOptions, SendOptions.SendUnreliable);
+    }
+
+    public void SendBPingBallPos(Vector3 Pos)
+    {
+
+        object[] data = new object[] { Pos };
+        RaiseEventOptions raiseEventOptions;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.Others };
+        }
+        else
+        {
+            raiseEventOptions = new RaiseEventOptions { Receivers = ReceiverGroup.MasterClient };
+        }
+        PhotonNetwork.RaiseEvent(SendBallPos, data, raiseEventOptions, SendOptions.SendUnreliable);
     }
 
     #endregion
