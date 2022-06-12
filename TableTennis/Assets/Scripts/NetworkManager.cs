@@ -12,6 +12,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IOnEventCallback
     // Start is called before the first frame update
     void Start()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         LoginScript.instance.LoginClicked += OnJoinButtonClicked;
         roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = 2;
