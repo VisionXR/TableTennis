@@ -997,6 +997,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loginScript: {fileID: 1314461223}
+  NextSceneNumber: 1
 --- !u!4 &1436477102
 Transform:
   m_ObjectHideFlags: 0
