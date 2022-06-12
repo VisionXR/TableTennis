@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,6 +8,7 @@ public class GameManager : MonoBehaviour
     public Transform P1Pos, P2Pos;
     public GameObject cam;
     public GameObject Bat1, Bat2;
+    private bool CanISend = false;
 
     private void Awake()
     {
@@ -31,10 +33,18 @@ public class GameManager : MonoBehaviour
             cam.transform.rotation = P2Pos.rotation;
             Bat2.GetComponent<BatScript>().StartMovement();
         }
+        StartCoroutine(WaitAndSend());
+    }
+
+    private IEnumerator WaitAndSend()
+    {
+        yield return new WaitForSeconds(1);
+        CanISend = true;
     }
 
     public void ReceivedBatPos(Vector3 Pos)
     {
+        Debug.Log(" Received Bat Pos ");
         if(isPlayer1)
         {
             Bat2.transform.position = Pos;
@@ -46,13 +56,16 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
-        if(isPlayer1)
+        if (CanISend)
         {
-            NetworkManager.instance.SendBatPos(Bat1.transform.position);
-        }
-        else
-        {
-            NetworkManager.instance.SendBatPos(Bat2.transform.position);
+            if (isPlayer1)
+            {
+                NetworkManager.instance.SendBatPos(Bat1.transform.position);
+            }
+            else
+            {
+                NetworkManager.instance.SendBatPos(Bat2.transform.position);
+            }
         }
     }
 }

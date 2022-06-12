@@ -99,6 +99,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks, IOnEventCallback
     }
     public void SendBatPos(Vector3 Pos)
     {
+        Debug.Log(" Send Bat Pos ");
         object[] data = new object[] { Pos};
         RaiseEventOptions raiseEventOptions;
         if (PhotonNetwork.IsMasterClient)
